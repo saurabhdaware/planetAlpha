@@ -1,3 +1,3 @@
 # planetAlpha
 
-## ThreeJS aviator game (Under development)
+ThreeJS aviator game (Under development)
