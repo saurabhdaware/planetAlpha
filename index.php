@@ -29,16 +29,18 @@
 
 	<script>
 		var scene = new THREE.Scene();
-		var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+		var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.001, 1000);
+		var mySpaceship;
 
 
 		var renderer = new THREE.WebGLRenderer();
 		renderer.setSize(window.innerWidth, window.innerHeight);
 		document.body.appendChild(renderer.domElement);
 
-		var controls = new THREE.OrbitControls( camera,renderer.domElement );
-		camera.position.set( 0, 20, 100 );
-		controls.update();
+		// var controls = new THREE.OrbitControls( camera,renderer.domElement );
+		camera.position.set( -0.1, 0.05, 0 );
+		camera.rotation.y = -90*Math.PI/180;
+		// controls.update();
 
 		
 		;(function(){
@@ -62,11 +64,12 @@
 			scene.add(object3d)		
 		})()
 
-		var mesh	= THREEx.createSkymap('skybox')
-		scene.add( mesh )	
+		var sky	= THREEx.createSkymap('skybox')
+		scene.add( sky );	
+		// sky.add(camera);
 
 		var geometry = new THREE.PlaneGeometry( 1000,1000, 32 );
-		var material = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
+		var material = new THREE.MeshPhongMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
 		var plane = new THREE.Mesh( geometry, material );
 		scene.add( plane );
 		plane.rotation.x = 90*Math.PI/180;
@@ -83,18 +86,32 @@
 			object3d.position.x = 10
 		})
 
-		var loader  = new THREEx.UniversalLoader()
-		
+		var loadingManager = new THREE.LoadingManager( function() {
+			scene.add( mySpaceship );
+			// scene.add(plane);
+		} );
+
+		// var loader  = new THREEx.UniversalLoader()
+		var loader	= new THREE.ColladaLoader(loadingManager);
+
 		var url = 'models/SS1.dae';
 		loader.load(url, function(object3d){
-			scene.add(object3d)
-			object3d.scale.multiplyScalar(10);
-			object3d.add(camera)
+			mySpaceship = object3d.scene;
+			mySpaceship.add(sky);
+			// mySpaceship.add(camera);
+			// scene.add(object3d)
+			// object3d.scale.multiplyScalar(10);
+			// object3d.position.x +=0.05;
 		})
+		loader.onLoadComplete = function(){(console.log("TADA!"+object3d))}
 
 		var animate = function () {
+			if(mySpaceship !== undefined){
+				mySpaceship.position.x +=0.1;
+				camera.position.x +=0.1;
+			}
 			requestAnimationFrame(animate);
-			controls.update();
+			// controls.update();
 			renderer.render(scene, camera);
 		};
 
