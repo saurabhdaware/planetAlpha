@@ -14,7 +14,7 @@
 	</style>
 </head>
 
-<body>
+<body onkeydown="movement_keydown(event)" onkeyup="movement_keyup(event)">
 	<script src="js/three.js-master/build/three.js"></script>
 	<script src="js/three.js-master/build/three.min.js"></script>
 	<script src="js/three.js-master/examples/js/controls/OrbitControls.js"></script>
@@ -31,6 +31,10 @@
 		var scene = new THREE.Scene();
 		var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.001, 1000);
 		var mySpaceship;
+		let moveleft_keydown = false;
+		let moveright_keydown = false;
+		let moveup_keydown = false;
+		let movedown_keydown = false;
 
 
 		var renderer = new THREE.WebGLRenderer();
@@ -43,7 +47,7 @@
 		// controls.update();
 
 		
-		;(function(){
+		(function(){
 			var object3d	= new THREE.AmbientLight(0x101010*8)
 			object3d.name	= 'Ambient light'
 			scene.add(object3d)
@@ -64,7 +68,7 @@
 			scene.add(object3d)		
 		})()
 
-		var sky	= THREEx.createSkymap('skybox')
+		var sky	= THREEx.createSkymap('skybox');
 		scene.add( sky );	
 		// sky.add(camera);
 
@@ -84,6 +88,7 @@
 		THREEx.SpaceShips.loadShuttle01(function(object3d){
 			scene.add(object3d)
 			object3d.position.x = 10
+			object3d.rotation.y = 90*Math.PI/180;
 		})
 
 		var loadingManager = new THREE.LoadingManager( function() {
@@ -98,13 +103,9 @@
 		loader.load(url, function(object3d){
 			mySpaceship = object3d.scene;
 			mySpaceship.add(sky);
-			// mySpaceship.add(camera);
-			// scene.add(object3d)
-			// object3d.scale.multiplyScalar(10);
-			// object3d.position.x +=0.05;
 		})
 		loader.onLoadComplete = function(){(console.log("TADA!"+object3d))}
-
+		
 		var animate = function () {
 			if(mySpaceship !== undefined){
 				mySpaceship.position.x +=0.1;
@@ -114,8 +115,55 @@
 			// controls.update();
 			renderer.render(scene, camera);
 		};
-
+		// renderer.render(scene, camera);
 		animate();
+
+		movement_keydown = function(event){
+			if(event.key == "ArrowLeft"){
+				moveleft_keydown = true;
+			}
+			if(event.key == "ArrowRight"){
+				moveright_keydown = true;
+			}
+			if(event.key == "ArrowUp"){
+				moveup_keydown = true;
+			}
+			if(event.key == "ArrowDown"){
+				movedown_keydown = true;
+			}
+			updateMovement();
+		}
+
+		movement_keyup = function(event){
+			if(event.key == "ArrowLeft"){
+				moveleft_keydown = false;
+			}
+			if(event.key == "ArrowRight"){
+				moveright_keydown = false;
+			}
+			if(event.key == "ArrowUp"){
+				moveup_keydown = false;
+			}
+			if(event.key == "ArrowDown"){
+				movedown_keydown = false;
+			}
+			updateMovement();
+		}
+
+		updateMovement = function(){
+			if(moveleft_keydown == true){
+				mySpaceship.position.z -=0.01;
+			}
+			if(moveright_keydown == true){
+				mySpaceship.position.z +=0.01;
+			}
+			if(moveup_keydown == true){
+				mySpaceship.position.y +=0.01;
+			}
+			if(movedown_keydown == true){
+				mySpaceship.position.y -=0.01;
+			}
+		}
 	</script>
 </body>
 
