@@ -72,7 +72,7 @@
 		scene.add( sky );	
 		// sky.add(camera);
 
-		var geometry = new THREE.PlaneGeometry( 1000,1000, 32 );
+		var geometry = new THREE.PlaneGeometry( 100000,100000, 32 );
 		var material = new THREE.MeshPhongMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
 		var plane = new THREE.Mesh( geometry, material );
 		scene.add( plane );
@@ -80,7 +80,7 @@
 		plane.position.y = -10;
 		floorTexture = THREE.ImageUtils.loadTexture("images/cloud.png");
 		floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping; 
-		floorTexture.repeat.set(10,10);
+		floorTexture.repeat.set(1000,1000);
 		material.map = floorTexture;
 		material.transparent = true;
 		material.opacity = 0.5;
@@ -108,10 +108,37 @@
 		
 		var animate = function () {
 			if(mySpaceship !== undefined){
-				mySpaceship.position.x +=0.1;
-				camera.position.x +=0.1;
+				mySpaceship.position.x +=0.5;
+				camera.position.x +=0.5;
+
+				if(moveleft_keydown == false){
+					if(mySpaceship.rotation.x <0){
+						mySpaceship.rotation.x +=3*Math.PI/180;
+					}
+				}
+
+				if(moveright_keydown == false){
+					if(mySpaceship.rotation.x >0){
+						mySpaceship.rotation.x -=3*Math.PI/180;
+					}
+				}
+
+				if(moveup_keydown == false){
+					if(mySpaceship.rotation.z >0){
+						mySpaceship.rotation.z -=3*Math.PI/180;
+					}
+				}
+				
+				if(movedown_keydown == false){
+					if(mySpaceship.rotation.z <0){
+						mySpaceship.rotation.z +=3*Math.PI/180;
+					}
+				}
+
 			}
 			requestAnimationFrame(animate);
+
+	
 			// controls.update();
 			renderer.render(scene, camera);
 		};
@@ -152,17 +179,47 @@
 
 		updateMovement = function(){
 			if(moveleft_keydown == true){
-				mySpaceship.position.z -=0.01;
+				if(mySpaceship.rotation.x > -90*Math.PI/180){
+					mySpaceship.rotation.x -= 2*Math.PI/180;
+				}
+				if(mySpaceship.rotation.x < 0*Math.PI/180 ){
+					mySpaceship.position.z -= -1*(mySpaceship.rotation.x*180/Math.PI)/10 ;
+					camera.position.z -= -1*(mySpaceship.rotation.x*180/Math.PI)/10;
+				}
 			}
+	
+
 			if(moveright_keydown == true){
-				mySpaceship.position.z +=0.01;
+				if(mySpaceship.rotation.x < 90*Math.PI/180 ){
+					mySpaceship.rotation.x +=2*Math.PI/180;
+				}
+				if(mySpaceship.rotation.x > 0*Math.PI/180){
+					mySpaceship.position.z += (mySpaceship.rotation.x*180/Math.PI)/10;;
+					camera.position.z += (mySpaceship.rotation.x*180/Math.PI)/10;2;
+				}
 			}
+
+			
 			if(moveup_keydown == true){
-				mySpaceship.position.y +=0.01;
+				if(mySpaceship.rotation.z < 90*Math.PI/180 ){
+					mySpaceship.rotation.z +=2*Math.PI/180;
+				}
+				if(mySpaceship.rotation.z > 0*Math.PI/180){
+					mySpaceship.position.y +=2;
+					camera.position.y +=2;
+				}
 			}
+				
 			if(movedown_keydown == true){
-				mySpaceship.position.y -=0.01;
+				if(mySpaceship.rotation.z > -90*Math.PI/180 ){
+					mySpaceship.rotation.z -=2*Math.PI/180;
+				}
+				if(mySpaceship.rotation.z < 0*Math.PI/180){
+					mySpaceship.position.y -=2;
+					camera.position.y -=2;
+				}
 			}
+
 		}
 	</script>
 </body>
