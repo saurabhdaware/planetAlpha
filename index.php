@@ -111,9 +111,7 @@
 				mySpaceship.position.x +=0.5;
 				camera.position.x +=0.5;
 				if(mySpaceship.position.x >= 400){
-					console.log("boo!");
 					mySpaceship.position.x = 0;
-					mySpaceship.position.y = 0;
 					camera.position.x = -0.1;
 				}
 
