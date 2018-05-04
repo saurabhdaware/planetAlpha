@@ -72,7 +72,7 @@
 		scene.add( sky );	
 		// sky.add(camera);
 
-		var geometry = new THREE.PlaneGeometry( 100000,100000, 32 );
+		var geometry = new THREE.PlaneGeometry( 1000,1000, 32 );
 		var material = new THREE.MeshPhongMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
 		var plane = new THREE.Mesh( geometry, material );
 		scene.add( plane );
@@ -80,14 +80,14 @@
 		plane.position.y = -10;
 		floorTexture = THREE.ImageUtils.loadTexture("images/cloud.png");
 		floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping; 
-		floorTexture.repeat.set(1000,1000);
+		floorTexture.repeat.set(10,10);
 		material.map = floorTexture;
 		material.transparent = true;
 		material.opacity = 0.5;
 
 		THREEx.SpaceShips.loadShuttle01(function(object3d){
 			scene.add(object3d)
-			object3d.position.x = 10
+			object3d.position.x = 100;
 			object3d.rotation.y = 90*Math.PI/180;
 		})
 
@@ -110,6 +110,12 @@
 			if(mySpaceship !== undefined){
 				mySpaceship.position.x +=0.5;
 				camera.position.x +=0.5;
+				if(mySpaceship.position.x >= 400){
+					console.log("boo!");
+					mySpaceship.position.x = 0;
+					mySpaceship.position.y = 0;
+					camera.position.x = -0.1;
+				}
 
 				if(moveleft_keydown == false){
 					if(mySpaceship.rotation.x <0){
@@ -183,8 +189,8 @@
 					mySpaceship.rotation.x -= 2*Math.PI/180;
 				}
 				if(mySpaceship.rotation.x < 0*Math.PI/180 ){
-					mySpaceship.position.z -= -1*(mySpaceship.rotation.x*180/Math.PI)/10 ;
-					camera.position.z -= -1*(mySpaceship.rotation.x*180/Math.PI)/10;
+					mySpaceship.position.z -= -1*(mySpaceship.rotation.x*180/Math.PI)/50 ;
+					camera.position.z -= -1*(mySpaceship.rotation.x*180/Math.PI)/50;
 				}
 			}
 	
@@ -194,8 +200,8 @@
 					mySpaceship.rotation.x +=2*Math.PI/180;
 				}
 				if(mySpaceship.rotation.x > 0*Math.PI/180){
-					mySpaceship.position.z += (mySpaceship.rotation.x*180/Math.PI)/10;;
-					camera.position.z += (mySpaceship.rotation.x*180/Math.PI)/10;2;
+					mySpaceship.position.z += (mySpaceship.rotation.x*180/Math.PI)/50;
+					camera.position.z += (mySpaceship.rotation.x*180/Math.PI)/50;
 				}
 			}
 
