@@ -1,6 +1,7 @@
 <html>
 
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> 
 	<title>My first three.js app</title>
 	<style>
 		body {
@@ -11,10 +12,25 @@
 			width: 100%;
 			height: 100%
 		}
+
+		.controls{
+			position:absolute;
+			bottom:10px;
+			right:10px;
+			padding:20px;
+			font-size:20pt;
+			font-weight:bold;
+			background:rgba(255,255,255,0.5);
+			color:#777;
+			border:1px solid white;
+			border-radius:40px;
+			
+		}
 	</style>
 </head>
 
-<body onkeydown="movement_keydown(event)" onkeyup="movement_keyup(event)">
+<body onkeydown="movement_keydown(event)" onkeyup="movement_keyup(event)" id="bodyy"> 
+	<button class="controls" ontouchstart="fakeKeydown('ArrowRight');console.log('ouch!')" ontouchend="clearInterval(touchinterval);moveright_keydown = false;">&gt;&gt;</button>
 	<script src="js/three.js-master/build/three.js"></script>
 	<script src="js/three.js-master/build/three.min.js"></script>
 	<script src="js/three.js-master/examples/js/controls/OrbitControls.js"></script>
@@ -24,7 +40,6 @@
 	<script src='js/threex.skymap/threex.skymap.js'></script>
 	<script src='js/threex.skymap/threex.texturecube.js'></script>
 	<script src='js/threex.skymap/threex.cubetexturehcross.js'></script>
-	<script src='js/threex.universalloader/threex.universalloader.js'></script>
 	<script src="js/threex.spaceships/threex.spaceships.js"></script>
 
 	<script>
@@ -35,6 +50,7 @@
 		let moveright_keydown = false;
 		let moveup_keydown = false;
 		let movedown_keydown = false;
+		let touchend = false;
 
 
 		var renderer = new THREE.WebGLRenderer();
@@ -149,6 +165,25 @@
 		// renderer.render(scene, camera);
 		animate();
 
+		fakeKeydown = function(key){
+			touchinterval = setInterval(()=>{
+				var e = new Event("keydown");
+				e.key=key;    // just enter the char you want to send 
+				e.keyCode=e.key.charCodeAt(0);
+				e.which=e.keyCode;
+				e.altKey=false;
+				e.ctrlKey=true;
+				e.shiftKey=false;
+				e.metaKey=false;
+				e.bubbles=true;
+				document.getElementById('bodyy').dispatchEvent(e);
+				if(touchend == true){
+					clearInterval(touchinterval);
+				}
+			},30)
+		
+		}
+
 		movement_keydown = function(event){
 			if(event.key == "ArrowLeft"){
 				moveleft_keydown = true;
@@ -209,8 +244,8 @@
 					mySpaceship.rotation.z +=2*Math.PI/180;
 				}
 				if(mySpaceship.rotation.z > 0*Math.PI/180){
-					mySpaceship.position.y +=2;
-					camera.position.y +=2;
+					mySpaceship.position.y +=(mySpaceship.rotation.z*180/Math.PI)/50;
+					camera.position.y +=(mySpaceship.rotation.z*180/Math.PI)/50;
 				}
 			}
 				
@@ -219,8 +254,8 @@
 					mySpaceship.rotation.z -=2*Math.PI/180;
 				}
 				if(mySpaceship.rotation.z < 0*Math.PI/180){
-					mySpaceship.position.y -=2;
-					camera.position.y -=2;
+					mySpaceship.position.y -=-1*(mySpaceship.rotation.z*180/Math.PI)/50;
+					camera.position.y -=-1*(mySpaceship.rotation.z*180/Math.PI)/50;
 				}
 			}
 
