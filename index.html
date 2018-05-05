@@ -57,15 +57,15 @@
 </head>
 
 <body onkeydown="movement_keydown(event)" onkeyup="movement_keyup(event)" id="bodyy"> 
-	<button class="controls controls-moveright noSelect" ontouchstart="fakeKeydown('ArrowRight');console.log('ouch!')" ontouchend="clearInterval(touchinterval);moveright_keydown = false;">&gt;&gt;</button>
-	<button class="controls controls-moveleft noSelect" ontouchstart="fakeKeydown('ArrowLeft');console.log('ouch!')" ontouchend="clearInterval(touchinterval);moveleft_keydown = false;">&lt;&lt;</button>
+	<button class="controls controls-moveright noSelect" ontouchstart="fakeKeydown('ArrowRight');" ontouchend="clearInterval(touchinterval);moveright_keydown = false;">&gt;&gt;</button>
+	<button class="controls controls-moveleft noSelect" ontouchstart="fakeKeydown('ArrowLeft');" ontouchend="clearInterval(touchinterval);moveleft_keydown = false;">&lt;&lt;</button>
 	<button class="controls controls-fullscreen noSelect" onclick="toggleFullScreen()">Full Screen</button>
-	<script src="js/three.js-master/build/three.js"></script>
-	<script src="js/three.js-master/build/three.min.js"></script>
-	<script src="js/three.js-master/examples/js/controls/OrbitControls.js"></script>
-	<script src="js/three.js-master/examples/js/loaders/OBJLoader.js"></script>
-	<script src="js/three.js-master/examples/js/loaders/MTLLoader.js"></script>
-	<script src="js/three.js-master/examples/js/loaders/ColladaLoader.js"></script>
+	<script src="http://www.threejs.org/build/three.js"></script>
+	<script src="http://www.threejs.org/build/three.min.js"></script>
+	<script src="http://www.threejs.org/examples/js/controls/OrbitControls.js"></script>
+	<script src="http://www.threejs.org/examples/js/loaders/OBJLoader.js"></script>
+	<script src="http://www.threejs.org/examples/js/loaders/MTLLoader.js"></script>
+	<script src="http://www.threejs.org/examples/js/loaders/ColladaLoader.js"></script>
 	<script src='js/threex.skymap/threex.skymap.js'></script>
 	<script src='js/threex.skymap/threex.texturecube.js'></script>
 	<script src='js/threex.skymap/threex.cubetexturehcross.js'></script>
