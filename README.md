@@ -1,3 +1,3 @@
-# planetAlpha
+# planetZerugoria
 
-ThreeJS aviator game (Under development)
+Human vs Aliens space fight game (under development)
