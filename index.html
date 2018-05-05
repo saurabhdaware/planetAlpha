@@ -71,6 +71,7 @@
 	<script src='js/threex.skymap/threex.cubetexturehcross.js'></script>
 	<script src="js/threex.spaceships/threex.spaceships.js"></script>
 	<script src="controllers.js"></script>
+	<script src="utils.js"></script>
 
 	<script>
 		var scene = new THREE.Scene();
@@ -81,27 +82,6 @@
 		let moveup_keydown = false;
 		let movedown_keydown = false;
 		let touchend = false;
-
-		function toggleFullScreen() {
-			if ((document.fullScreenElement && document.fullScreenElement !== null) ||    
-			(!document.mozFullScreen && !document.webkitIsFullScreen)) {
-				if (document.documentElement.requestFullScreen) {  
-				document.documentElement.requestFullScreen();  
-				} else if (document.documentElement.mozRequestFullScreen) {  
-				document.documentElement.mozRequestFullScreen();  
-				} else if (document.documentElement.webkitRequestFullScreen) {  
-				document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);  
-				}  
-			} else {  
-				if (document.cancelFullScreen) {  
-				document.cancelFullScreen();  
-				} else if (document.mozCancelFullScreen) {  
-				document.mozCancelFullScreen();  
-				} else if (document.webkitCancelFullScreen) {  
-				document.webkitCancelFullScreen();  
-				}  
-			}  
-		}
 
 		var renderer = new THREE.WebGLRenderer();
 		renderer.setSize(window.innerWidth, window.innerHeight);
