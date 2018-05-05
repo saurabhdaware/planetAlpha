@@ -17,4 +17,6 @@ function toggleFullScreen() {
         document.webkitCancelFullScreen();  
         }  
     }  
+
+    // setTimeout(document.location.reload(false),100);
 }

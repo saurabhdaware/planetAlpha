@@ -2,7 +2,7 @@
 
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> 
-	<title>My first three.js app</title>
+	<title>Zerugoria</title>
 	<style>
 		body {
 			margin: 0;
@@ -70,6 +70,7 @@
 	<script src='js/threex.skymap/threex.texturecube.js'></script>
 	<script src='js/threex.skymap/threex.cubetexturehcross.js'></script>
 	<script src="js/threex.spaceships/threex.spaceships.js"></script>
+	<script src="js/threex.windowresize/threex.windowresize.js"></script>
 	<script src="controllers.js"></script>
 	<script src="utils.js"></script>
 
@@ -86,6 +87,9 @@
 		var renderer = new THREE.WebGLRenderer();
 		renderer.setSize(window.innerWidth, window.innerHeight);
 		document.body.appendChild(renderer.domElement);
+
+		THREEx.WindowResize(renderer, camera);
+
 
 		// var controls = new THREE.OrbitControls( camera,renderer.domElement );
 		camera.position.set( -0.1, 0.05, 0 );

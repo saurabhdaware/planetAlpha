@@ -1,4 +1,8 @@
 fakeKeydown = function(key){
+    moveleft_keydown = false;
+    moveright_keydown = false;
+    moveup_keydown = false;
+    movedown_keydown = false;
     touchinterval = setInterval(()=>{
         var e = new Event("keydown");
         e.key=key;    // just enter the char you want to send 
