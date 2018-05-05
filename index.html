@@ -14,9 +14,6 @@
 		}
 
 		.controls{
-			position:absolute;
-			bottom:10px;
-			right:10px;
 			padding:20px;
 			font-size:20pt;
 			font-weight:bold;
@@ -26,11 +23,43 @@
 			border-radius:40px;
 			
 		}
+
+		.controls-moveright{
+			position:absolute;
+			bottom:10px;
+			right:10px;
+		}
+
+		.controls-moveleft{
+			position:absolute;
+			bottom:10px;
+			left:10px;
+		}
+
+		.controls-fullscreen{
+			position: absolute;
+			top:10px;
+			right:10px;
+			border-radius:0px;
+			font-size:12pt;
+			padding:5px;
+		}
+
+		.noSelect {
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-khtml-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
 	</style>
 </head>
 
 <body onkeydown="movement_keydown(event)" onkeyup="movement_keyup(event)" id="bodyy"> 
-	<button class="controls" ontouchstart="fakeKeydown('ArrowRight');console.log('ouch!')" ontouchend="clearInterval(touchinterval);moveright_keydown = false;">&gt;&gt;</button>
+	<button class="controls controls-moveright noSelect" ontouchstart="fakeKeydown('ArrowRight');console.log('ouch!')" ontouchend="clearInterval(touchinterval);moveright_keydown = false;">&gt;&gt;</button>
+	<button class="controls controls-moveleft noSelect" ontouchstart="fakeKeydown('ArrowLeft');console.log('ouch!')" ontouchend="clearInterval(touchinterval);moveleft_keydown = false;">&lt;&lt;</button>
+	<button class="controls controls-fullscreen noSelect" onclick="toggleFullScreen()">Full Screen</button>
 	<script src="js/three.js-master/build/three.js"></script>
 	<script src="js/three.js-master/build/three.min.js"></script>
 	<script src="js/three.js-master/examples/js/controls/OrbitControls.js"></script>
@@ -52,6 +81,26 @@
 		let movedown_keydown = false;
 		let touchend = false;
 
+		function toggleFullScreen() {
+			if ((document.fullScreenElement && document.fullScreenElement !== null) ||    
+			(!document.mozFullScreen && !document.webkitIsFullScreen)) {
+				if (document.documentElement.requestFullScreen) {  
+				document.documentElement.requestFullScreen();  
+				} else if (document.documentElement.mozRequestFullScreen) {  
+				document.documentElement.mozRequestFullScreen();  
+				} else if (document.documentElement.webkitRequestFullScreen) {  
+				document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);  
+				}  
+			} else {  
+				if (document.cancelFullScreen) {  
+				document.cancelFullScreen();  
+				} else if (document.mozCancelFullScreen) {  
+				document.mozCancelFullScreen();  
+				} else if (document.webkitCancelFullScreen) {  
+				document.webkitCancelFullScreen();  
+				}  
+			}  
+		}
 
 		var renderer = new THREE.WebGLRenderer();
 		renderer.setSize(window.innerWidth, window.innerHeight);
@@ -120,7 +169,6 @@
 			mySpaceship = object3d.scene;
 			mySpaceship.add(sky);
 		})
-		loader.onLoadComplete = function(){(console.log("TADA!"+object3d))}
 		
 		var animate = function () {
 			if(mySpaceship !== undefined){
