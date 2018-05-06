@@ -1,4 +1,7 @@
 fakeKeydown = function(key){
+    if(typeof touchinterval !== 'undefined'){
+        clearInterval(touchinterval);
+    }
     moveleft_keydown = false;
     moveright_keydown = false;
     moveup_keydown = false;
