@@ -1,0 +1,49 @@
+body {
+    margin: 0;
+}
+
+canvas {
+    width: 100%;
+    height: 100%
+}
+
+.controls{
+    padding:20px;
+    font-size:20pt;
+    font-weight:bold;
+    background:rgba(255,255,255,0.5);
+    color:#000;
+    border:1px solid white;
+    border-radius:40px;
+    
+}
+
+.controls-moveright{
+    position:absolute;
+    bottom:10px;
+    right:10px;
+}
+
+.controls-moveleft{
+    position:absolute;
+    bottom:10px;
+    left:10px;
+}
+
+.controls-fullscreen{
+    position: absolute;
+    top:10px;
+    right:10px;
+    border-radius:0px;
+    font-size:12pt;
+    padding:5px;
+}
+
+.noSelect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
