@@ -1,5 +1,5 @@
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.001, 1000);
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.001, 10000);
 var mySpaceship;
 let moveleft_keydown = false;
 let moveright_keydown = false;
@@ -77,14 +77,38 @@ loader.load(url, function(object3d){
     mySpaceship = object3d.scene;
     mySpaceship.add(sky);
 })
+var texture = new THREE.Texture();
+var loader = new THREE.ImageLoader(loadingManager);
+loader.load('models/mountainTexture.png',function(image) {
+    texture.image = image;
+    texture.needsUpdate = true;
+});
+
+var loader = new THREE.OBJLoader(loadingManager);
+let mountainsURL = 'models/mountain.obj';
+loader.load(mountainsURL,function(mountainsObject){
+    mountainsObject.traverse(function(child) {
+        if (child instanceof THREE.Mesh) {
+            child.material.map = texture;
+            child.material.normalMap = THREE.ImageUtils.loadTexture('models/mountainNormal.png');
+            child.material.bumpMap = THREE.ImageUtils.loadTexture('models/mountainBump.tif');
+            child.material.bumpScale = 1.5;
+        }
+    });
+    mountainsObject.scale.set(50,50,50);
+    mountainsObject.position.x = 1300;
+    scene.add(mountainsObject);
+})
 
 var animate = function () {
     if(mySpaceship !== undefined){
         mySpaceship.position.x +=1;
         camera.position.x +=1;
-        if(mySpaceship.position.x >= 900){
-            mySpaceship.position.x = 0;
-            camera.position.x = -0.1;
+        if(mySpaceship.position.x%300 == 0){
+            // mySpaceship.position.x = 0;
+            // camera.position.x = -0.1;
+            plane.position.x = plane.position.x + 300;
+            console.log(plane.position.x);
         }
 
         if(mySpaceship.rotation.z > 0*Math.PI/180){// Up
