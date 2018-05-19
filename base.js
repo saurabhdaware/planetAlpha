@@ -80,36 +80,45 @@ loader.load(url, function(object3d){
 
 var animate = function () {
     if(mySpaceship !== undefined){
-        mySpaceship.position.x +=0.5;
-        camera.position.x +=0.5;
+        mySpaceship.position.x +=1;
+        camera.position.x +=1;
         if(mySpaceship.position.x >= 900){
             mySpaceship.position.x = 0;
             camera.position.x = -0.1;
         }
 
-        if(moveleft_keydown == false){
-            if(mySpaceship.rotation.x <0){
-                mySpaceship.rotation.x +=3*Math.PI/180;
-            }
-        }
-
-        if(moveright_keydown == false){
-            if(mySpaceship.rotation.x >0){
-                mySpaceship.rotation.x -=3*Math.PI/180;
-            }
-        }
-
-        if(moveup_keydown == false){
-            if(mySpaceship.rotation.z >0){
+        if(mySpaceship.rotation.z > 0*Math.PI/180){// Up
+            if(moveup_keydown == false){
                 mySpaceship.rotation.z -=3*Math.PI/180;
             }
+            mySpaceship.position.y +=(mySpaceship.rotation.z*180/Math.PI)/50;
+            camera.position.y +=(mySpaceship.rotation.z*180/Math.PI)/50;
         }
-        
-        if(movedown_keydown == false){
-            if(mySpaceship.rotation.z <0){
+
+        if(mySpaceship.rotation.z < 0*Math.PI/180){// Down
+            if(movedown_keydown == false){
                 mySpaceship.rotation.z +=3*Math.PI/180;
             }
+            mySpaceship.position.y -=-1*(mySpaceship.rotation.z*180/Math.PI)/50;
+            camera.position.y -=-1*(mySpaceship.rotation.z*180/Math.PI)/50;
         }
+
+        if(mySpaceship.rotation.x < 0*Math.PI/180 ){ //Left
+            if(moveleft_keydown == false){
+                mySpaceship.rotation.x +=3*Math.PI/180;
+            }
+            mySpaceship.position.z -= -1*(mySpaceship.rotation.x*180/Math.PI)/50 ;
+            camera.position.z -= -1*(mySpaceship.rotation.x*180/Math.PI)/50;
+        }
+
+        if(mySpaceship.rotation.x > 0*Math.PI/180){ //Right
+            if(moveright_keydown == false){
+                mySpaceship.rotation.x -=3*Math.PI/180;
+            }
+            mySpaceship.position.z += (mySpaceship.rotation.x*180/Math.PI)/50;
+            camera.position.z += (mySpaceship.rotation.x*180/Math.PI)/50;
+        }
+
 
     }
     requestAnimationFrame(animate);

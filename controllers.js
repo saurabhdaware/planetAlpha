@@ -57,24 +57,15 @@ movement_keyup = function(event){
 }
 
 updateMovement = function(){
-    if(moveleft_keydown == true){
+    if(moveleft_keydown == true || mySpaceship.rotation.x < 0){
         if(mySpaceship.rotation.x > -90*Math.PI/180){
             mySpaceship.rotation.x -= 2*Math.PI/180;
         }
-        if(mySpaceship.rotation.x < 0*Math.PI/180 ){
-            mySpaceship.position.z -= -1*(mySpaceship.rotation.x*180/Math.PI)/50 ;
-            camera.position.z -= -1*(mySpaceship.rotation.x*180/Math.PI)/50;
-        }
     }
 
-
-    if(moveright_keydown == true){
+    if(moveright_keydown == true || mySpaceship.rotation.x > 0){
         if(mySpaceship.rotation.x < 90*Math.PI/180 ){
             mySpaceship.rotation.x +=2*Math.PI/180;
-        }
-        if(mySpaceship.rotation.x > 0*Math.PI/180){
-            mySpaceship.position.z += (mySpaceship.rotation.x*180/Math.PI)/50;
-            camera.position.z += (mySpaceship.rotation.x*180/Math.PI)/50;
         }
     }
 
@@ -83,19 +74,11 @@ updateMovement = function(){
         if(mySpaceship.rotation.z < 90*Math.PI/180 ){
             mySpaceship.rotation.z +=2*Math.PI/180;
         }
-        if(mySpaceship.rotation.z > 0*Math.PI/180){
-            mySpaceship.position.y +=(mySpaceship.rotation.z*180/Math.PI)/50;
-            camera.position.y +=(mySpaceship.rotation.z*180/Math.PI)/50;
-        }
     }
         
     if(movedown_keydown == true){
         if(mySpaceship.rotation.z > -90*Math.PI/180 ){
             mySpaceship.rotation.z -=2*Math.PI/180;
-        }
-        if(mySpaceship.rotation.z < 0*Math.PI/180){
-            mySpaceship.position.y -=-1*(mySpaceship.rotation.z*180/Math.PI)/50;
-            camera.position.y -=-1*(mySpaceship.rotation.z*180/Math.PI)/50;
         }
     }
 
