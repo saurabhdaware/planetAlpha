@@ -105,10 +105,7 @@ var animate = function () {
         mySpaceship.position.x +=1;
         camera.position.x +=1;
         if(mySpaceship.position.x%300 == 0){
-            // mySpaceship.position.x = 0;
-            // camera.position.x = -0.1;
             plane.position.x = plane.position.x + 300;
-            console.log(plane.position.x);
         }
 
         if(mySpaceship.rotation.z > 0*Math.PI/180){// Up

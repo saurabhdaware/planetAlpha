@@ -24,6 +24,21 @@
 	<script src="controllers.js"></script>
 	<script src="utils.js"></script>
 	<script src="base.js"></script>
+	<script>
+		if(window.orientation == 0){
+			alert("Please toggle landscape mode for the best gaming experience");
+			document.getElementById('bodyy').style.display = 'none';
+		}
+		window.addEventListener("orientationchange", function () {
+			switch(window.orientation) {  
+				case 0:
+				alert('Please get back to the landscape mode');
+				document.getElementById("bodyy").style.display = 'none';
+				break; 
+				case 90 || -90:
+				document.getElementById("bodyy").style.display = 'block';
+			}
+		});
+	</script>
 </body>
-
 </html>
