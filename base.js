@@ -76,6 +76,39 @@ var url = 'models/SS1.dae';
 loader.load(url, function(object3d){
     mySpaceship = object3d.scene;
     mySpaceship.add(sky);
+    var detonationR	= new THREEx.SpaceShips.Detonation()
+	detonationR.position.x= -2;
+    detonationR.position.z= 1.5;
+    detonationR.position.y = 3;
+    detonationR.scale.set(4,4,4);
+    detonationR.rotation.y = 90*Math.PI/180;
+    scene.add(detonationR);
+    mySpaceship.add(detonationR);
+    var shootR	= new THREEx.SpaceShips.Shoot()
+	shootR.position.x= -2;
+    shootR.position.z= 1.5;
+    shootR.position.y = 3;
+    shootR.rotation.y = 10*Math.PI/180;
+    shootR.scale.set(4,4,4);
+    scene.add(shootR);
+    mySpaceship.add(shootR);
+
+    var detonationL	= new THREEx.SpaceShips.Detonation()
+	detonationL.position.x= -2;
+    detonationL.position.z= -1.5;
+    detonationL.position.y = 3;
+    detonationL.scale.set(4,4,4);
+    detonationL.rotation.y = 90*Math.PI/180;
+    scene.add(detonationL);
+    mySpaceship.add(detonationL);
+    var shootL	= new THREEx.SpaceShips.Shoot()
+	shootL.position.x= -2;
+    shootL.position.z= -1.5;
+    shootL.position.y = 3;
+    shootL.rotation.y = -10*Math.PI/180;
+    shootL.scale.set(4,4,4);
+    scene.add(shootL);
+    mySpaceship.add(shootL);
 })
 var texture = new THREE.Texture();
 var loader = new THREE.ImageLoader(loadingManager);
@@ -110,7 +143,7 @@ var animate = function () {
 
         if(mySpaceship.rotation.z > 0*Math.PI/180){// Up
             if(moveup_keydown == false){
-                mySpaceship.rotation.z -=3*Math.PI/180;
+                mySpaceship.rotation.z -=1*Math.PI/180;
             }
             mySpaceship.position.y +=(mySpaceship.rotation.z*180/Math.PI)/50;
             camera.position.y +=(mySpaceship.rotation.z*180/Math.PI)/50;
@@ -118,7 +151,7 @@ var animate = function () {
 
         if(mySpaceship.rotation.z < 0*Math.PI/180){// Down
             if(movedown_keydown == false){
-                mySpaceship.rotation.z +=3*Math.PI/180;
+                mySpaceship.rotation.z +=1*Math.PI/180;
             }
             mySpaceship.position.y -=-1*(mySpaceship.rotation.z*180/Math.PI)/50;
             camera.position.y -=-1*(mySpaceship.rotation.z*180/Math.PI)/50;
@@ -126,7 +159,7 @@ var animate = function () {
 
         if(mySpaceship.rotation.x < 0*Math.PI/180 ){ //Left
             if(moveleft_keydown == false){
-                mySpaceship.rotation.x +=3*Math.PI/180;
+                mySpaceship.rotation.x +=2*Math.PI/180;
             }
             mySpaceship.position.z -= -1*(mySpaceship.rotation.x*180/Math.PI)/50 ;
             camera.position.z -= -1*(mySpaceship.rotation.x*180/Math.PI)/50;
@@ -134,7 +167,7 @@ var animate = function () {
 
         if(mySpaceship.rotation.x > 0*Math.PI/180){ //Right
             if(moveright_keydown == false){
-                mySpaceship.rotation.x -=3*Math.PI/180;
+                mySpaceship.rotation.x -=2*Math.PI/180;
             }
             mySpaceship.position.z += (mySpaceship.rotation.x*180/Math.PI)/50;
             camera.position.z += (mySpaceship.rotation.x*180/Math.PI)/50;
