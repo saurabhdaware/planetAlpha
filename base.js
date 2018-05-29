@@ -41,22 +41,34 @@ camera.rotation.y = -90*Math.PI/180;
     scene.add(object3d)		
 })()
 
-var sky	= THREEx.createSkymap('skybox');
+var sky	= THREEx.createSkymap('pisa');
 scene.add( sky );	
 // sky.add(camera);
 
 var geometry = new THREE.PlaneGeometry( 10000,10000, 32 );
-var material = new THREE.MeshPhongMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
-var plane = new THREE.Mesh( geometry, material );
-scene.add( plane );
-plane.rotation.x = 90*Math.PI/180;
-plane.position.y = -10;
+var cloudMaterial = new THREE.MeshPhongMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
+var cloudMesh = new THREE.Mesh( geometry, cloudMaterial );
+scene.add( cloudMesh );
+cloudMesh.rotation.x = 90*Math.PI/180;
+cloudMesh.position.y = -10;
 floorTexture = THREE.ImageUtils.loadTexture("images/cloud.png");
 floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping; 
 floorTexture.repeat.set(100,100);
-material.map = floorTexture;
-material.transparent = true;
-material.opacity = 0.5;
+cloudMaterial.map = floorTexture;
+cloudMaterial.transparent = true;
+cloudMaterial.opacity = 0.5;
+
+// var grassMaterial = new THREE.MeshPhongMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
+// var grassMesh = new THREE.Mesh(geometry,grassMaterial);
+// grassTexture = THREE.ImageUtils.loadTexture("images/grass.jpg");
+// grassTexture.wrapS = grassTexture.wrapT = THREE.RepeatWrapping; 
+// grassTexture.repeat.set(10,10);
+// grassMaterial.map = grassTexture;
+// scene.add(grassMesh);
+// grassMesh.position.y = -1000;
+// grassMesh.rotation.x = 90*Math.PI/180;
+// grassMaterial.transparent = false;
+// grassMaterial.opacity = 1;
 
 THREEx.SpaceShips.loadShuttle01(function(object3d){
     scene.add(object3d)
@@ -66,7 +78,8 @@ THREEx.SpaceShips.loadShuttle01(function(object3d){
 
 var loadingManager = new THREE.LoadingManager( function() {
     scene.add( mySpaceship );
-    // scene.add(plane);
+
+    // scene.add(cloudMesh);
 } );
 
 // var loader  = new THREEx.UniversalLoader()
@@ -77,10 +90,10 @@ loader.load(url, function(object3d){
     mySpaceship = object3d.scene;
     mySpaceship.add(sky);
     var detonationR	= new THREEx.SpaceShips.Detonation()
-	detonationR.position.x= -2;
+	detonationR.position.x= -2.1;
     detonationR.position.z= 1.5;
     detonationR.position.y = 3;
-    detonationR.scale.set(4,4,4);
+    detonationR.scale.set(2,2,2);
     detonationR.rotation.y = 90*Math.PI/180;
     scene.add(detonationR);
     mySpaceship.add(detonationR);
@@ -94,10 +107,10 @@ loader.load(url, function(object3d){
     mySpaceship.add(shootR);
 
     var detonationL	= new THREEx.SpaceShips.Detonation()
-	detonationL.position.x= -2;
+	detonationL.position.x= -2.1;
     detonationL.position.z= -1.5;
     detonationL.position.y = 3;
-    detonationL.scale.set(4,4,4);
+    detonationL.scale.set(2,2,2);
     detonationL.rotation.y = 90*Math.PI/180;
     scene.add(detonationL);
     mySpaceship.add(detonationL);
@@ -109,36 +122,39 @@ loader.load(url, function(object3d){
     shootL.scale.set(4,4,4);
     scene.add(shootL);
     mySpaceship.add(shootL);
-})
-var texture = new THREE.Texture();
-var loader = new THREE.ImageLoader(loadingManager);
-loader.load('models/mountainTexture.png',function(image) {
-    texture.image = image;
-    texture.needsUpdate = true;
-});
 
-var loader = new THREE.OBJLoader(loadingManager);
-let mountainsURL = 'models/mountain.obj';
-loader.load(mountainsURL,function(mountainsObject){
-    mountainsObject.traverse(function(child) {
-        if (child instanceof THREE.Mesh) {
-            child.material.map = texture;
-            child.material.normalMap = THREE.ImageUtils.loadTexture('models/mountainNormal.png');
-            child.material.bumpMap = THREE.ImageUtils.loadTexture('models/mountainBump.tif');
-            child.material.bumpScale = 1.5;
-        }
-    });
-    mountainsObject.scale.set(50,50,50);
-    mountainsObject.position.x = 1300;
-    scene.add(mountainsObject);
+    // mySpaceship.rotation.y = 160*Math.Pi/180
 })
+// var texture = new THREE.Texture();
+// var loader = new THREE.ImageLoader(loadingManager);
+// loader.load('models/mountainTexture.png',function(image) {
+//     texture.image = image;
+//     texture.needsUpdate = true;
+// });
+
+// var loader = new THREE.OBJLoader(loadingManager);
+// let mountainsURL = 'models/mountain.obj';
+// loader.load(mountainsURL,function(mountainsObject){
+//     mountainsObject.traverse(function(child) {
+//         if (child instanceof THREE.Mesh) {
+//             child.material.map = texture;
+//             child.material.normalMap = THREE.ImageUtils.loadTexture('models/mountainNormal.png');
+//             child.material.bumpMap = THREE.ImageUtils.loadTexture('models/mountainBump.tif');
+//             child.material.bumpScale = 1.5;
+//         }
+//     });
+//     mountainsObject.scale.set(50,50,50);
+//     mountainsObject.position.x = 1300;
+//     scene.add(mountainsObject);
+// })
+
 
 var animate = function () {
     if(mySpaceship !== undefined){
         mySpaceship.position.x +=1;
         camera.position.x +=1;
         if(mySpaceship.position.x%300 == 0){
-            plane.position.x = plane.position.x + 300;
+            cloudMesh.position.x = cloudMesh.position.x + 300;
         }
 
         if(mySpaceship.rotation.z > 0*Math.PI/180){// Up
