@@ -1,5 +1,5 @@
 # planetZerugoria
-![](https://raw.githubusercontent.com/saurabhdaware/planetZerugoria/master/logo.png = 100x100)
+![](https://raw.githubusercontent.com/saurabhdaware/planetZerugoria/master/logo.png)
 
 ## Human vs Aliens space fight game (under development)
 
