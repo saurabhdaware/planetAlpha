@@ -71,13 +71,13 @@ updateMovement = function(){
 
     
     if(moveup_keydown == true){
-        if(mySpaceship.rotation.z < 90*Math.PI/180 ){
+        if(mySpaceship.rotation.z < 40*Math.PI/180 ){
             mySpaceship.rotation.z +=2*Math.PI/180;
         }
     }
         
     if(movedown_keydown == true){
-        if(mySpaceship.rotation.z > -90*Math.PI/180 ){
+        if(mySpaceship.rotation.z > -40*Math.PI/180 ){
             mySpaceship.rotation.z -=2*Math.PI/180;
         }
     }

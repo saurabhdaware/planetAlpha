@@ -1,11 +1,13 @@
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.001, 10000);
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
 var mySpaceship;
 let moveleft_keydown = false;
 let moveright_keydown = false;
 let moveup_keydown = false;
 let movedown_keydown = false;
 let touchend = false;
+let from=0;
+let to = 0;
 
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -15,7 +17,7 @@ THREEx.WindowResize(renderer, camera);
 
 
 // var controls = new THREE.OrbitControls( camera,renderer.domElement );
-camera.position.set( -0.1, 0.05, 0 );
+camera.position.set( -0.17, 0.05, 0 );
 camera.rotation.y = -90*Math.PI/180;
 // controls.update();
 
@@ -45,30 +47,64 @@ var sky	= THREEx.createSkymap('pisa');
 scene.add( sky );	
 // sky.add(camera);
 
-var geometry = new THREE.PlaneGeometry( 10000,10000, 32 );
-var cloudMaterial = new THREE.MeshPhongMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
-var cloudMesh = new THREE.Mesh( geometry, cloudMaterial );
-scene.add( cloudMesh );
-cloudMesh.rotation.x = 90*Math.PI/180;
-cloudMesh.position.y = -10;
-floorTexture = THREE.ImageUtils.loadTexture("images/cloud.png");
-floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping; 
-floorTexture.repeat.set(100,100);
-cloudMaterial.map = floorTexture;
-cloudMaterial.transparent = true;
-cloudMaterial.opacity = 0.5;
+//CLOUDS 
 
-// var grassMaterial = new THREE.MeshPhongMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
-// var grassMesh = new THREE.Mesh(geometry,grassMaterial);
-// grassTexture = THREE.ImageUtils.loadTexture("images/grass.jpg");
-// grassTexture.wrapS = grassTexture.wrapT = THREE.RepeatWrapping; 
-// grassTexture.repeat.set(10,10);
-// grassMaterial.map = grassTexture;
-// scene.add(grassMesh);
-// grassMesh.position.y = -1000;
-// grassMesh.rotation.x = 90*Math.PI/180;
-// grassMaterial.transparent = false;
-// grassMaterial.opacity = 1;
+var textureClouds = THREE.ImageUtils.loadTexture( 'images/cloud10.png', null, animate );
+textureClouds.magFilter = THREE.LinearMipMapLinearFilter;
+textureClouds.minFilter = THREE.LinearMipMapLinearFilter;
+
+var fog = new THREE.Fog( 0x4584b4, - 100, 3000 );
+let geometryClouds = new THREE.PlaneGeometry(64,64);
+materialClouds = new THREE.MeshPhongMaterial( {
+    fogColor:fog.color,
+    fogNear:fog.near,
+    fogFar:fog.far,
+    map:textureClouds,
+    // vertexShader: document.getElementById( 'vs' ).textContent,
+    // fragmentShader: document.getElementById( 'fs' ).textContent,
+    depthWrite: false,
+    // depthTest: false,
+    transparent: true,
+    opacity:0.5
+
+} );
+var cloudsHolderMesh = new THREE.Mesh(geometryClouds,materialClouds);
+scene.add(cloudsHolderMesh);
+function createClouds(){
+    to = to + 800;
+    from= to-800;
+    for ( var i = from; i < to; i++ ) {
+        var cloudsMesh = new THREE.Mesh(geometryClouds,materialClouds);
+        cloudsMesh.position.x = i*2;
+        cloudsMesh.position.y = - Math.random() * Math.random() * 200 - 100;
+        cloudsMesh.position.z = Math.random() * 9000 - 5000;
+        cloudsMesh.rotation.z = Math.random() * Math.PI;
+        cloudsMesh.rotation.y = 270*Math.PI/180;
+        cloudsMesh.scale.x = cloudsMesh.scale.y = Math.random() * Math.random() * 5 + 0.5;
+        scene.add(cloudsMesh);
+        cloudsHolderMesh.add(cloudsMesh);
+    }
+}
+
+createClouds();
+
+
+
+
+
+
+// var geometry = new THREE.PlaneGeometry( 10000,10000, 32 );
+// var cloudMaterial = new THREE.MeshPhongMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
+// var cloudMesh = new THREE.Mesh( geometry, cloudMaterial );
+// scene.add( cloudMesh );
+// cloudMesh.rotation.x = 90*Math.PI/180;
+// cloudMesh.position.y = -10;
+// floorTexture = THREE.ImageUtils.loadTexture("images/cloud.png");
+// floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping; 
+// floorTexture.repeat.set(100,100);
+// cloudMaterial.map = floorTexture;
+// cloudMaterial.transparent = true;
+// cloudMaterial.opacity = 0.9;
 
 THREEx.SpaceShips.loadShuttle01(function(object3d){
     scene.add(object3d)
@@ -122,40 +158,16 @@ loader.load(url, function(object3d){
     shootL.scale.set(4,4,4);
     scene.add(shootL);
     mySpaceship.add(shootL);
-
-    // mySpaceship.rotation.y = 160*Math.Pi/180
 })
-// var texture = new THREE.Texture();
-// var loader = new THREE.ImageLoader(loadingManager);
-// loader.load('models/mountainTexture.png',function(image) {
-//     texture.image = image;
-//     texture.needsUpdate = true;
-// });
-
-// var loader = new THREE.OBJLoader(loadingManager);
-// let mountainsURL = 'models/mountain.obj';
-// loader.load(mountainsURL,function(mountainsObject){
-//     mountainsObject.traverse(function(child) {
-//         if (child instanceof THREE.Mesh) {
-//             child.material.map = texture;
-//             child.material.normalMap = THREE.ImageUtils.loadTexture('models/mountainNormal.png');
-//             child.material.bumpMap = THREE.ImageUtils.loadTexture('models/mountainBump.tif');
-//             child.material.bumpScale = 1.5;
-//         }
-//     });
-//     mountainsObject.scale.set(50,50,50);
-//     mountainsObject.position.x = 1300;
-//     scene.add(mountainsObject);
-// })
-
 
 var animate = function () {
     if(mySpaceship !== undefined){
         mySpaceship.position.x +=1;
         camera.position.x +=1;
-        if(mySpaceship.position.x%300 == 0){
-            cloudMesh.position.x = cloudMesh.position.x + 300;
-        }
+        // if(mySpaceship.position.x%600 == 0){
+        //     // cloudsHolderMesh.position.x = cloudsHolderMesh.position.x + 1600;
+        //     // console.log(cloudsHolderMesh.position);
+        // }
 
         if(mySpaceship.rotation.z > 0*Math.PI/180){// Up
             if(moveup_keydown == false){
