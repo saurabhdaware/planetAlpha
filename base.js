@@ -8,6 +8,7 @@ let movedown_keydown = false;
 let touchend = false;
 let from=0;
 let to = 0;
+let cloudSet = 1;
 
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -68,28 +69,53 @@ materialClouds = new THREE.MeshPhongMaterial( {
     opacity:0.5
 
 } );
-var cloudsHolderMesh = new THREE.Mesh(geometryClouds,materialClouds);
-scene.add(cloudsHolderMesh);
-function createClouds(){
-    to = to + 800;
-    from= to-800;
+let geometry1 = new THREE.PlaneGeometry();
+let geometry2 = new THREE.PlaneGeometry();
+let geometry3 = new THREE.PlaneGeometry();
+let geometry4 = new THREE.PlaneGeometry();
+
+var cloudsHolderMesh1 = new THREE.Mesh(geometry1,materialClouds);
+scene.add(cloudsHolderMesh1);
+
+var cloudsHolderMesh2 = new THREE.Mesh(geometry2,materialClouds);
+scene.add(cloudsHolderMesh2);
+cloudsHolderMesh2.position.x = 900;
+
+var cloudsHolderMesh3 = new THREE.Mesh(geometry3,materialClouds);
+scene.add(cloudsHolderMesh3);
+cloudsHolderMesh3.position.x = 1800;
+
+var cloudsHolderMesh4 = new THREE.Mesh(geometry4,materialClouds);
+scene.add(cloudsHolderMesh4);
+cloudsHolderMesh4.position.x = 2700;
+
+
+function createClouds(HolderMesh){
+    to = to + 900;
+    from= to-900;
     for ( var i = from; i < to; i++ ) {
         var cloudsMesh = new THREE.Mesh(geometryClouds,materialClouds);
-        cloudsMesh.position.x = i*2;
+        cloudsMesh.position.x = i;
         cloudsMesh.position.y = - Math.random() * Math.random() * 200 - 100;
         cloudsMesh.position.z = Math.random() * 9000 - 5000;
         cloudsMesh.rotation.z = Math.random() * Math.PI;
         cloudsMesh.rotation.y = 270*Math.PI/180;
-        cloudsMesh.scale.x = cloudsMesh.scale.y = Math.random() * Math.random() * 5 + 0.5;
+        cloudsMesh.scale.x = cloudsMesh.scale.y = Math.random() * Math.random() * 10 + 0.5;
         scene.add(cloudsMesh);
-        cloudsHolderMesh.add(cloudsMesh);
+        HolderMesh.add(cloudsMesh);
     }
 }
 
-createClouds();
+createClouds(cloudsHolderMesh1);
+createClouds(cloudsHolderMesh2);
+createClouds(cloudsHolderMesh3);
+createClouds(cloudsHolderMesh4);
 
-
-
+console.log(cloudsHolderMesh1.children[0].position.x);
+console.log(cloudsHolderMesh1.children[899].position.x);
+console.log(cloudsHolderMesh2.children[0].position.x);
+console.log(cloudsHolderMesh3.children[0].position.x);
+console.log(cloudsHolderMesh4.children[0].position.x);
 
 
 
@@ -162,12 +188,32 @@ loader.load(url, function(object3d){
 
 var animate = function () {
     if(mySpaceship !== undefined){
-        mySpaceship.position.x +=1;
-        camera.position.x +=1;
-        // if(mySpaceship.position.x%600 == 0){
-        //     // cloudsHolderMesh.position.x = cloudsHolderMesh.position.x + 1600;
-        //     // console.log(cloudsHolderMesh.position);
-        // }
+        mySpaceship.position.x +=3;
+        camera.position.x +=3;
+        if(mySpaceship.position.x%1800 == 0){
+            if(cloudSet == 1){
+                cloudsHolderMesh1.position.x = cloudsHolderMesh1.position.x + 3600;
+                cloudsHolderMesh2.position.x = cloudsHolderMesh1.position.x + 900;
+                cloudSet = 2;
+            }else if(cloudSet == 2){
+                cloudsHolderMesh3.position.x = cloudsHolderMesh2.position.x + 900;
+                cloudsHolderMesh4.position.x = cloudsHolderMesh3.position.x + 900;
+                cloudSet = 1;
+            }
+            // else if(cloudSet==3){
+            //     cloudsHolderMesh3.position.x = cloudsHolderMesh2.position.x + 900;
+            //     cloudSet =4;
+            // }else if(cloudSet==4){
+            //     cloudsHolderMesh4.position.x = cloudsHolderMesh3.position.x + 900;
+            //     cloudSet =1;
+            // }
+            console.log(mySpaceship.position.x);
+            console.log(cloudsHolderMesh1.position.x);
+            console.log(cloudsHolderMesh2.position.x);
+            console.log(cloudsHolderMesh3.position.x);
+            console.log(cloudsHolderMesh4.position.x);
+            console.log('--------------------------------');
+        }
 
         if(mySpaceship.rotation.z > 0*Math.PI/180){// Up
             if(moveup_keydown == false){

@@ -22,12 +22,14 @@ canvas {
     position:absolute;
     bottom:10px;
     right:10px;
+    z-index:100;
 }
 
 .controls-moveleft{
     position:absolute;
     bottom:10px;
     left:10px;
+    z-index:100;
 }
 
 .controls-fullscreen{
