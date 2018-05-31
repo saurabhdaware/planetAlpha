@@ -6,9 +6,7 @@ let moveright_keydown = false;
 let moveup_keydown = false;
 let movedown_keydown = false;
 let touchend = false;
-let from=0;
-let to = 0;
-let cloudSet = 1;
+let indx = 0;
 
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -54,48 +52,32 @@ var textureClouds = THREE.ImageUtils.loadTexture( 'images/cloud10.png', null, an
 textureClouds.magFilter = THREE.LinearMipMapLinearFilter;
 textureClouds.minFilter = THREE.LinearMipMapLinearFilter;
 
-var fog = new THREE.Fog( 0x4584b4, - 100, 3000 );
+var fog = new THREE.Fog( 0xbbbbbb, - 1, 3000 );
 let geometryClouds = new THREE.PlaneGeometry(64,64);
-materialClouds = new THREE.MeshPhongMaterial( {
-    fogColor:fog.color,
-    fogNear:fog.near,
-    fogFar:fog.far,
-    map:textureClouds,
-    // vertexShader: document.getElementById( 'vs' ).textContent,
-    // fragmentShader: document.getElementById( 'fs' ).textContent,
+materialClouds = new THREE.ShaderMaterial( {
+
+    uniforms: {
+
+        "map": { type: "t", value: textureClouds },
+        "fogColor" : { type: "c", value: fog.color },
+        "fogNear" : { type: "f", value: fog.near },
+        "fogFar" : { type: "f", value: fog.far },
+
+    },
+    vertexShader: document.getElementById( 'vs' ).textContent,
+    fragmentShader: document.getElementById( 'fs' ).textContent,
     depthWrite: false,
     // depthTest: false,
     transparent: true,
-    opacity:0.5
-
 } );
+
 let geometry1 = new THREE.PlaneGeometry();
-let geometry2 = new THREE.PlaneGeometry();
-let geometry3 = new THREE.PlaneGeometry();
-let geometry4 = new THREE.PlaneGeometry();
-
-var cloudsHolderMesh1 = new THREE.Mesh(geometry1,materialClouds);
-scene.add(cloudsHolderMesh1);
-
-var cloudsHolderMesh2 = new THREE.Mesh(geometry2,materialClouds);
-scene.add(cloudsHolderMesh2);
-cloudsHolderMesh2.position.x = 900;
-
-var cloudsHolderMesh3 = new THREE.Mesh(geometry3,materialClouds);
-scene.add(cloudsHolderMesh3);
-cloudsHolderMesh3.position.x = 1800;
-
-var cloudsHolderMesh4 = new THREE.Mesh(geometry4,materialClouds);
-scene.add(cloudsHolderMesh4);
-cloudsHolderMesh4.position.x = 2700;
-
-
+var cloudsHolderMesh = new THREE.Mesh(geometry1,materialClouds);
+scene.add(cloudsHolderMesh);
 function createClouds(HolderMesh){
-    to = to + 900;
-    from= to-900;
-    for ( var i = from; i < to; i++ ) {
+    for ( var i = 0; i < 8000; i++ ) {
         var cloudsMesh = new THREE.Mesh(geometryClouds,materialClouds);
-        cloudsMesh.position.x = i;
+        cloudsMesh.position.x = i*3;
         cloudsMesh.position.y = - Math.random() * Math.random() * 200 - 100;
         cloudsMesh.position.z = Math.random() * 9000 - 5000;
         cloudsMesh.rotation.z = Math.random() * Math.PI;
@@ -106,31 +88,7 @@ function createClouds(HolderMesh){
     }
 }
 
-createClouds(cloudsHolderMesh1);
-createClouds(cloudsHolderMesh2);
-createClouds(cloudsHolderMesh3);
-createClouds(cloudsHolderMesh4);
-
-console.log(cloudsHolderMesh1.children[0].position.x);
-console.log(cloudsHolderMesh1.children[899].position.x);
-console.log(cloudsHolderMesh2.children[0].position.x);
-console.log(cloudsHolderMesh3.children[0].position.x);
-console.log(cloudsHolderMesh4.children[0].position.x);
-
-
-
-// var geometry = new THREE.PlaneGeometry( 10000,10000, 32 );
-// var cloudMaterial = new THREE.MeshPhongMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
-// var cloudMesh = new THREE.Mesh( geometry, cloudMaterial );
-// scene.add( cloudMesh );
-// cloudMesh.rotation.x = 90*Math.PI/180;
-// cloudMesh.position.y = -10;
-// floorTexture = THREE.ImageUtils.loadTexture("images/cloud.png");
-// floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping; 
-// floorTexture.repeat.set(100,100);
-// cloudMaterial.map = floorTexture;
-// cloudMaterial.transparent = true;
-// cloudMaterial.opacity = 0.9;
+createClouds(cloudsHolderMesh);
 
 THREEx.SpaceShips.loadShuttle01(function(object3d){
     scene.add(object3d)
@@ -140,11 +98,8 @@ THREEx.SpaceShips.loadShuttle01(function(object3d){
 
 var loadingManager = new THREE.LoadingManager( function() {
     scene.add( mySpaceship );
-
-    // scene.add(cloudMesh);
 } );
 
-// var loader  = new THREEx.UniversalLoader()
 var loader	= new THREE.ColladaLoader(loadingManager);
 
 var url = 'models/SS1.dae';
@@ -190,29 +145,12 @@ var animate = function () {
     if(mySpaceship !== undefined){
         mySpaceship.position.x +=3;
         camera.position.x +=3;
-        if(mySpaceship.position.x%1800 == 0){
-            if(cloudSet == 1){
-                cloudsHolderMesh1.position.x = cloudsHolderMesh1.position.x + 3600;
-                cloudsHolderMesh2.position.x = cloudsHolderMesh1.position.x + 900;
-                cloudSet = 2;
-            }else if(cloudSet == 2){
-                cloudsHolderMesh3.position.x = cloudsHolderMesh2.position.x + 900;
-                cloudsHolderMesh4.position.x = cloudsHolderMesh3.position.x + 900;
-                cloudSet = 1;
+        if(mySpaceship.position.x%3 ==0){
+            indx++;
+            cloudsHolderMesh.children[indx].position.x = mySpaceship.position.x + 8000;
+            if(indx >= 7990){
+                indx = 0;
             }
-            // else if(cloudSet==3){
-            //     cloudsHolderMesh3.position.x = cloudsHolderMesh2.position.x + 900;
-            //     cloudSet =4;
-            // }else if(cloudSet==4){
-            //     cloudsHolderMesh4.position.x = cloudsHolderMesh3.position.x + 900;
-            //     cloudSet =1;
-            // }
-            console.log(mySpaceship.position.x);
-            console.log(cloudsHolderMesh1.position.x);
-            console.log(cloudsHolderMesh2.position.x);
-            console.log(cloudsHolderMesh3.position.x);
-            console.log(cloudsHolderMesh4.position.x);
-            console.log('--------------------------------');
         }
 
         if(mySpaceship.rotation.z > 0*Math.PI/180){// Up
