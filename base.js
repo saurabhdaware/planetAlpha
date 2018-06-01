@@ -1,5 +1,5 @@
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 6000);
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.01, 7000);
 var mySpaceship;
 let moveleft_keydown = false;
 let moveright_keydown = false;
@@ -20,58 +20,19 @@ camera.rotation.y = -90*Math.PI/180;
 
 
 let environment = new Environment(1);
-
-THREEx.SpaceShips.loadShuttle01(function(object3d){
-    scene.add(object3d)
-    object3d.position.x = 400;
-    object3d.rotation.y = 90*Math.PI/180;
-})
+let models = new Models();
+models.loadShuttle(1);
 
 var loadingManager = new THREE.LoadingManager( function() {
     scene.add( mySpaceship );
 } );
 
 var loader	= new THREE.ColladaLoader(loadingManager);
+var gltfLoad = new THREE.GLTFLoader(loadingManager);
 
-var url = 'models/SS1.dae';
-loader.load(url, function(object3d){
-    mySpaceship = object3d.scene;
-    mySpaceship.add(environment.sky);
-    var detonationR	= new THREEx.SpaceShips.Detonation()
-	detonationR.position.x= -2.1;
-    detonationR.position.z= 1.5;
-    detonationR.position.y = 3;
-    detonationR.scale.set(2,2,2);
-    detonationR.rotation.y = 90*Math.PI/180;
-    scene.add(detonationR);
-    mySpaceship.add(detonationR);
-    var shootR	= new THREEx.SpaceShips.Shoot()
-	shootR.position.x= -2;
-    shootR.position.z= 1.5;
-    shootR.position.y = 3;
-    shootR.rotation.y = 10*Math.PI/180;
-    shootR.scale.set(4,4,4);
-    scene.add(shootR);
-    mySpaceship.add(shootR);
 
-    var detonationL	= new THREEx.SpaceShips.Detonation()
-	detonationL.position.x= -2.1;
-    detonationL.position.z= -1.5;
-    detonationL.position.y = 3;
-    detonationL.scale.set(2,2,2);
-    detonationL.rotation.y = 90*Math.PI/180;
-    scene.add(detonationL);
-    mySpaceship.add(detonationL);
-    var shootL	= new THREEx.SpaceShips.Shoot()
-	shootL.position.x= -2;
-    shootL.position.z= -1.5;
-    shootL.position.y = 3;
-    shootL.rotation.y = -10*Math.PI/180;
-    shootL.scale.set(4,4,4);
-    scene.add(shootL);
-    mySpaceship.add(shootL);
-})
-
+models.loadMyShuttle(gltfLoad,2);
+console.log(mySpaceship);
 var animate = function () {
     if(mySpaceship !== undefined){
         mySpaceship.position.x +=3;
