@@ -58,7 +58,7 @@ class Models{
             })
         }
         if(type == 2){
-            gltfLoad.load('models/SS6.glb',function(object3d){
+            loader.load('models/SS6.glb',function(object3d){
                 mySpaceship = object3d.scene;
                 mySpaceship.add(environment.sky);
                 scene.add(mySpaceship);
@@ -115,6 +115,28 @@ class Models{
                 scene.add(shootC);
                 mySpaceship.add(shootC);
             });
+        }
+
+        if(type==3){
+            loader.load('models/VS1.glb',function(object3d){
+                mySpaceship = object3d.scene;
+                mySpaceship.scale.set(0.3,0.3,0.3);
+                scene.add(mySpaceship);
+                mySpaceship.add(environment.sky);
+            })
+        }
+
+        if(type == 4){
+            loader.load('models/SS3.glb',function(object3d){
+                mySpaceship = object3d.scene;
+                mySpaceship.scale.set(0.15,0.15,0.15);
+                scene.add(mySpaceship);
+                mySpaceship.add(environment.sky);
+            })
+        }
+
+        if(type == 5){
+
         }
     }
 }

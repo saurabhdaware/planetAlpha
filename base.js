@@ -14,7 +14,7 @@ document.body.appendChild(renderer.domElement);
 
 THREEx.WindowResize(renderer, camera);
 
-// var controls = new THREE.OrbitControls( camera,renderer.domElement );
+var controls = new THREE.OrbitControls( camera,renderer.domElement );
 camera.position.set( -0.17, 0.05, 0 );
 camera.rotation.y = -90*Math.PI/180;
 
@@ -24,19 +24,18 @@ let models = new Models();
 models.loadShuttle(1);
 
 var loadingManager = new THREE.LoadingManager( function() {
-    scene.add( mySpaceship );
+    // scene.add( mySpaceship );
 } );
 
 var loader	= new THREE.ColladaLoader(loadingManager);
 var gltfLoad = new THREE.GLTFLoader(loadingManager);
-
-
+var tdsLoad = new THREE.TDSLoader(loadingManager);
 models.loadMyShuttle(gltfLoad,2);
-console.log(mySpaceship);
+
 var animate = function () {
     if(mySpaceship !== undefined){
-        mySpaceship.position.x +=3;
-        camera.position.x +=3;
+        // mySpaceship.position.x +=3;
+        // camera.position.x +=3;
         if(mySpaceship.position.x%3 ==0){
             indx++;
             environment.cloudsHolderMesh.children[indx].position.x = mySpaceship.position.x + 8000;
