@@ -12,7 +12,7 @@
 	<!-- <link rel="manifest" href="manifest.json"> -->
 	<link rel="stylesheet" href="style.css">
 </head>
-
+<script src="controllers.js"></script>
 <body onkeydown="movement_keydown(event)" onkeyup="movement_keyup(event)" id="bodyy"> 
 	<button class="controls controls-moveright noSelect" ontouchstart="fakeKeydown('ArrowRight');" ontouchend="clearInterval(touchinterval);moveright_keydown = false;">&gt;&gt;</button>
 	<button class="controls controls-moveleft noSelect" ontouchstart="fakeKeydown('ArrowLeft');" ontouchend="clearInterval(touchinterval);moveleft_keydown = false;">&lt;&lt;</button>
@@ -67,9 +67,9 @@
 	<script src="js/threex.windowresize/threex.windowresize.js"></script>
 	<script src="environment.js"></script>
 	<script src="models.js"></script>
-	<script src="base.js"></script>
 	<script src="utils.js"></script>
-	<script src="controllers.js"></script>
+	<script src="base.js"></script>
+
 	<script>
 		if(window.orientation == 0){
 			alert("Please toggle landscape mode for the best gaming experience");

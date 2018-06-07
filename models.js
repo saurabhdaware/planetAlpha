@@ -1,6 +1,10 @@
 class Models{
     constructor(){
-        
+        this.shootL = new THREEx.SpaceShips.Shoot(0xff9955);
+        this.shootR = new THREEx.SpaceShips.Shoot(0xff9955);
+        this.detonationL = new THREEx.SpaceShips.Detonation(0x99ff55);
+        this.detonationR = new THREEx.SpaceShips.Detonation(0x99ff55);
+        // console.log(this);
     }
 
     loadShuttle(type){
@@ -12,25 +16,31 @@ class Models{
                 object3d.rotation.y = 90*Math.PI/180;
             })
             break;
-            
         }
     }
 
     loadMyShuttle(loader,type){
+        // console.log(this);
+        let detonationL = this.detonationL;
+            let detonationR = this.detonationR;
+            let shootL = this.shootL;
+            let shootR = this.shootR;
+
         if(type==1){
             var url = 'models/SS1.dae';
             loader.load(url, function(object3d){
                 mySpaceship = object3d.scene;
                 mySpaceship.add(environment.sky);
-                var detonationR	= new THREEx.SpaceShips.Detonation(0xff9955)
+                // var this.detonationR	= new THREEx.SpaceShips.Detonation(0xff9955)
                 detonationR.position.x= -2.1;
                 detonationR.position.z= 1.5;
                 detonationR.position.y = 3;
                 detonationR.scale.set(2,2,2);
                 detonationR.rotation.y = 90*Math.PI/180;
                 scene.add(detonationR);
-                mySpaceship.add(detonationR);
-                var shootR	= new THREEx.SpaceShips.Shoot(0xff9955)
+
+                mySpaceship.add(detonationR); 
+                // var this.shootR	= new THREEx.SpaceShips.Shoot(0xff9955)
                 shootR.position.x= -2;
                 shootR.position.z= 1.5;
                 shootR.position.y = 3;
@@ -38,8 +48,8 @@ class Models{
                 shootR.scale.set(4,4,4);
                 scene.add(shootR);
                 mySpaceship.add(shootR);
-    
-                var detonationL	= new THREEx.SpaceShips.Detonation(0xff9955)
+     
+                // var this.detonationL	= new THREEx.SpaceShips.Detonation(0xff9955)
                 detonationL.position.x= -2.1;
                 detonationL.position.z= -1.5;
                 detonationL.position.y = 3;
@@ -47,7 +57,7 @@ class Models{
                 detonationL.rotation.y = 90*Math.PI/180;
                 scene.add(detonationL);
                 mySpaceship.add(detonationL);
-                var shootL	= new THREEx.SpaceShips.Shoot(0xff9955)
+                // var this.shootL	= new THREEx.SpaceShips.Shoot(0xff9955)
                 shootL.position.x= -2;
                 shootL.position.z= -1.5;
                 shootL.position.y = 3;
@@ -62,58 +72,42 @@ class Models{
                 mySpaceship = object3d.scene;
                 mySpaceship.add(environment.sky);
                 scene.add(mySpaceship);
-                mySpaceship.position.x = 0.15;
-                mySpaceship.scale.set(0.5,0.5,0.5);
-                var detonationR	= new THREEx.SpaceShips.Detonation(0xff9955)
-                detonationR.position.x= -0.20;
-                detonationR.position.z= 0.09;
-                detonationR.position.y = 0;
+                mySpaceship.position.x = 3;
+                camera.position.x = 2.6;
+                mySpaceship.scale.set(0.35,0.35,0.35);
+                // var this.detonationR	= new THREEx.SpaceShips.Detonation(0x0099ff)
+                detonationR.position.x= -0.388;
+                detonationR.position.z= 0.02;
+                detonationR.position.y = -0.02;
                 detonationR.scale.set(0.1,0.1,0.1);
                 detonationR.rotation.y = 90*Math.PI/180;
                 scene.add(detonationR);
                 mySpaceship.add(detonationR);
-                var shootR	= new THREEx.SpaceShips.Shoot(0xff9955)
-                shootR.position.x= -0.15;
-                shootR.position.z= 0.09;
-                shootR.position.y = 0;
+                // var this.shootR	= new THREEx.SpaceShips.Shoot(0x0099ff)
+                shootR.position.x= -0.4;
+                shootR.position.z= 0.01;
+                shootR.position.y = -0.02;
                 shootR.rotation.y = 2*Math.PI/180;
-                shootR.scale.set(0.3,0.3,0.3);
+                shootR.scale.set(0.3,0.2,0.5);
                 scene.add(shootR);
                 mySpaceship.add(shootR);
     
-                var detonationL	= new THREEx.SpaceShips.Detonation(0xff9955)
-                detonationL.position.x= -0.20;
-                detonationL.position.z= -0.09;
-                detonationL.position.y = 0;
+                // var this.detonationL	= new THREEx.SpaceShips.Detonation(0x0099ff)
+                detonationL.position.x= -0.388;
+                detonationL.position.z= -0.03;
+                detonationL.position.y = -0.02;
                 detonationL.scale.set(0.1,0.1,0.1);
                 detonationL.rotation.y = 90*Math.PI/180;
                 scene.add(detonationL);
                 mySpaceship.add(detonationL);
-                var shootL	= new THREEx.SpaceShips.Shoot(0xff9955)
-                shootL.position.x= -0.15;
-                shootL.position.z= -0.09;
-                shootL.position.y = 0;
+                // var this.shootL	= new THREEx.SpaceShips.Shoot(0x0099ff)
+                shootL.position.x= -0.4;
+                shootL.position.z= -0.01;
+                shootL.position.y = -0.02;
                 shootL.rotation.y = -2*Math.PI/180;
-                shootL.scale.set(0.3,0.3,0.3);
+                shootL.scale.set(0.3,0.2,0.5);
                 scene.add(shootL);
                 mySpaceship.add(shootL);
-
-                var detonationC	= new THREEx.SpaceShips.Detonation(0x0099ff)
-                detonationC.position.x= -0.25;
-                detonationC.position.z= 0.01;
-                detonationC.position.y = 0.01;
-                detonationC.scale.set(0.1,0.1,0.1);
-                detonationC.rotation.y = 90*Math.PI/180;
-                scene.add(detonationC);
-                mySpaceship.add(detonationC);
-                var shootC	= new THREEx.SpaceShips.Shoot(0x0099ff)
-                shootC.position.x= -0.18;
-                shootC.position.z= 0.005;
-                shootC.position.y = 0.01;
-                shootC.rotation.y = 0*Math.PI/180;
-                shootC.scale.set(0.3,0.3,0.3);
-                scene.add(shootC);
-                mySpaceship.add(shootC);
             });
         }
 
@@ -127,16 +121,66 @@ class Models{
         }
 
         if(type == 4){
-            loader.load('models/SS3.glb',function(object3d){
+            console.log("------------ Spaceship 4 loaded ------------------");
+            // console.log(this);
+            loader.load('models/SS3.glb',function(object3d){ 
                 mySpaceship = object3d.scene;
                 mySpaceship.scale.set(0.15,0.15,0.15);
                 scene.add(mySpaceship);
                 mySpaceship.add(environment.sky);
+                mySpaceship.position.y = 0.01;
+
+                detonationR.position.x= -0.45;
+                detonationR.position.z= 0.076;
+                detonationR.position.y = 0;
+                detonationR.scale.set(0.2,0.2,0.2);
+                detonationR.rotation.y = 90*Math.PI/180;
+                scene.add(detonationR);
+                mySpaceship.add(detonationR);
+                
+                shootR.position.x= -0.5;
+                shootR.position.z= 0.076;
+                shootR.position.y = 0;
+                shootR.rotation.y = 0*Math.PI/180;
+                shootR.scale.set(0.3,0.3,0.3);
+                scene.add(shootR);
+                mySpaceship.add(shootR);
+                // this.shootR.children[0].material.color = 0x0000ff;
+                // this.shootR.children[1].material.color = 0x0000ff;
+                // this.shootR.children[2].material.color = 0x0000ff;
+                // this.shootR.children[3].material.color = 0x0000ff;
+                // this.shootR.children[0].material.color = 0xff0000;
+                // console.log(this.shootR.children[0].material.color);
+     
+                detonationL.position.x= -0.45;
+                detonationL.position.z= -0.076;
+                detonationL.position.y = 0;               
+                detonationL.scale.set(0.2,0.2,0.2);
+                detonationL.rotation.y = 90*Math.PI/180;
+                scene.add(detonationL);
+                mySpaceship.add(detonationL);
+
+                shootL.position.x= -0.5;
+                shootL.position.z= -0.076;
+                shootL.position.y = 0;
+                shootL.rotation.y = -0*Math.PI/180;
+                shootL.scale.set(0.3,0.3,0.3);
+                scene.add(shootL);
+                mySpaceship.add(shootL);
+
             })
         }
+
+        console.log(mySpaceship);
 
         if(type == 5){
 
         }
+
+        // console.log(this.shootL);
+
     }
+
+
+
 }
