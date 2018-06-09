@@ -26,11 +26,10 @@ models.loadShuttle(1);
 
 var loadingManager = new THREE.LoadingManager( function() {
     scene.add( mySpaceship );
-    scene.add(models.detonationL);
 } );
 var loader	= new THREE.ColladaLoader(loadingManager);
 var gltfLoad = new THREE.GLTFLoader(loadingManager);
-models.loadMyShuttle(gltfLoad,3);
+models.loadMyShuttle(loader,1);
 
 var animate = function () {
     if(mySpaceship !== undefined){

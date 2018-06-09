@@ -120,9 +120,10 @@ class Models{
         }
 
         if(type==3){
-            loader.load('models/VS1.glb',function(object3d){
+            loader.load('models/SS2.glb',function(object3d){
                 mySpaceship = object3d.scene;
                 mySpaceship.scale.set(0.3,0.3,0.3);
+                camera.position.x = -0.2;
                 scene.add(mySpaceship);
                 mySpaceship.add(environment.sky);
             })
@@ -171,11 +172,15 @@ class Models{
             })
         }
 
-
-        if(type == 5){
-
+        if(type==5){
+            loader.load('models/VS1.glb',function(object3d){
+                mySpaceship = object3d.scene;
+                mySpaceship.scale.set(0.3,0.3,0.3);
+                scene.add(mySpaceship);
+                mySpaceship.add(environment.sky);
+            })
         }
-
+        
         // console.log(this.shootL);
 
     }
