@@ -84,3 +84,50 @@ updateMovement = function(){
 
        
 }
+
+class MainController{
+    constructor(){
+
+    }
+
+    moveLeft(){
+        if(mySpaceship.rotation.x < 0*Math.PI/180 ){ //Left
+            if(moveleft_keydown == false){
+                mySpaceship.rotation.x +=2*Math.PI/180;
+            }
+            mySpaceship.position.z -= -3*(mySpaceship.rotation.x*180/Math.PI)/50 ;
+            camera.position.z -= -3*(mySpaceship.rotation.x*180/Math.PI)/50;
+        }
+    }
+
+
+    moveRight(){
+        if(mySpaceship.rotation.x > 0*Math.PI/180){ //Right
+            if(moveright_keydown == false){
+                mySpaceship.rotation.x -=2*Math.PI/180;
+            }
+            mySpaceship.position.z += 3*(mySpaceship.rotation.x*180/Math.PI)/50;
+            camera.position.z += 3*(mySpaceship.rotation.x*180/Math.PI)/50;
+        }
+    }
+
+    moveUp(){
+        if(mySpaceship.rotation.z > 0*Math.PI/180){// Up
+            if(moveup_keydown == false){
+                mySpaceship.rotation.z -=2*Math.PI/180;
+            }
+            mySpaceship.position.y +=3*(mySpaceship.rotation.z*180/Math.PI)/50;
+            camera.position.y +=3*(mySpaceship.rotation.z*180/Math.PI)/50;
+        }
+    }
+
+    moveDown(){
+        if(mySpaceship.rotation.z < 0*Math.PI/180){// Down
+            if(movedown_keydown == false){
+                mySpaceship.rotation.z +=2*Math.PI/180;
+            }
+            mySpaceship.position.y -=-3*(mySpaceship.rotation.z*180/Math.PI)/50;
+            camera.position.y -=-3*(mySpaceship.rotation.z*180/Math.PI)/50;
+        }
+    }
+}

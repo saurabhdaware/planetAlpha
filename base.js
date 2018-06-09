@@ -21,6 +21,7 @@ camera.rotation.y = -90*Math.PI/180;
 
 let environment = new Environment(1);
 let models = new Models();
+let mainController = new MainController();
 models.loadShuttle(1);
 
 var loadingManager = new THREE.LoadingManager( function() {
@@ -29,14 +30,10 @@ var loadingManager = new THREE.LoadingManager( function() {
 } );
 var loader	= new THREE.ColladaLoader(loadingManager);
 var gltfLoad = new THREE.GLTFLoader(loadingManager);
+models.loadMyShuttle(gltfLoad,3);
 
-var tdsLoad = new THREE.TDSLoader(loadingManager);
-models.loadMyShuttle(gltfLoad,4);
-// let settings = new Settings();
-// settings.hideShoot(true);
 var animate = function () {
     if(mySpaceship !== undefined){
-        // scene.remove(models.shootR);
         mySpaceship.position.x +=3;
         camera.position.x +=3;
         if(mySpaceship.position.x %3 ==0){
@@ -58,37 +55,12 @@ var animate = function () {
             models.detonationL.visible = true;
             models.detonationR.visible = true;
         }
-        if(mySpaceship.rotation.z > 0*Math.PI/180){// Up
-            if(moveup_keydown == false){
-                mySpaceship.rotation.z -=2*Math.PI/180;
-            }
-            mySpaceship.position.y +=3*(mySpaceship.rotation.z*180/Math.PI)/50;
-            camera.position.y +=3*(mySpaceship.rotation.z*180/Math.PI)/50;
-        }
 
-        if(mySpaceship.rotation.z < 0*Math.PI/180){// Down
-            if(movedown_keydown == false){
-                mySpaceship.rotation.z +=2*Math.PI/180;
-            }
-            mySpaceship.position.y -=-3*(mySpaceship.rotation.z*180/Math.PI)/50;
-            camera.position.y -=-3*(mySpaceship.rotation.z*180/Math.PI)/50;
-        }
-
-        if(mySpaceship.rotation.x < 0*Math.PI/180 ){ //Left
-            if(moveleft_keydown == false){
-                mySpaceship.rotation.x +=2*Math.PI/180;
-            }
-            mySpaceship.position.z -= -3*(mySpaceship.rotation.x*180/Math.PI)/50 ;
-            camera.position.z -= -3*(mySpaceship.rotation.x*180/Math.PI)/50;
-        }
-
-        if(mySpaceship.rotation.x > 0*Math.PI/180){ //Right
-            if(moveright_keydown == false){
-                mySpaceship.rotation.x -=2*Math.PI/180;
-            }
-            mySpaceship.position.z += 3*(mySpaceship.rotation.x*180/Math.PI)/50;
-            camera.position.z += 3*(mySpaceship.rotation.x*180/Math.PI)/50;
-        }
+        mainController.moveUp();
+        mainController.moveDown();
+        mainController.moveLeft();
+        mainController.moveRight();
+ 
     }
     requestAnimationFrame(animate);
 

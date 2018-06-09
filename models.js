@@ -2,8 +2,8 @@ class Models{
     constructor(){
         this.shootL = new THREEx.SpaceShips.Shoot(0xff9955);
         this.shootR = new THREEx.SpaceShips.Shoot(0xff9955);
-        this.detonationL = new THREEx.SpaceShips.Detonation(0x99ff55);
-        this.detonationR = new THREEx.SpaceShips.Detonation(0x99ff55);
+        this.detonationL = new THREEx.SpaceShips.Detonation(0xff9955);
+        this.detonationR = new THREEx.SpaceShips.Detonation(0xff9955);
         // console.log(this);
     }
 
@@ -89,6 +89,7 @@ class Models{
                 shootR.position.y = -0.02;
                 shootR.rotation.y = 2*Math.PI/180;
                 shootR.scale.set(0.3,0.2,0.5);
+            
                 scene.add(shootR);
                 mySpaceship.add(shootR);
     
@@ -108,6 +109,13 @@ class Models{
                 shootL.scale.set(0.3,0.2,0.5);
                 scene.add(shootL);
                 mySpaceship.add(shootL);
+
+                for(let i=0;i<=3;i++){
+                    shootR.children[i].material.color = {r:0,g:0.6,b:1}
+                    shootL.children[i].material.color = {r:0,g:0.6,b:1}
+                }
+                detonationL.material.color = {r:0,g:0.6,b:1};
+                detonationR.material.color = {r:0,g:0.6,b:1};
             });
         }
 
@@ -121,8 +129,6 @@ class Models{
         }
 
         if(type == 4){
-            console.log("------------ Spaceship 4 loaded ------------------");
-            // console.log(this);
             loader.load('models/SS3.glb',function(object3d){ 
                 mySpaceship = object3d.scene;
                 mySpaceship.scale.set(0.15,0.15,0.15);
@@ -145,12 +151,6 @@ class Models{
                 shootR.scale.set(0.3,0.3,0.3);
                 scene.add(shootR);
                 mySpaceship.add(shootR);
-                // this.shootR.children[0].material.color = 0x0000ff;
-                // this.shootR.children[1].material.color = 0x0000ff;
-                // this.shootR.children[2].material.color = 0x0000ff;
-                // this.shootR.children[3].material.color = 0x0000ff;
-                // this.shootR.children[0].material.color = 0xff0000;
-                // console.log(this.shootR.children[0].material.color);
      
                 detonationL.position.x= -0.45;
                 detonationL.position.z= -0.076;
@@ -171,7 +171,6 @@ class Models{
             })
         }
 
-        console.log(mySpaceship);
 
         if(type == 5){
 
