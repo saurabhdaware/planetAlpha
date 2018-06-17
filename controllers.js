@@ -25,6 +25,7 @@ fakeKeydown = function(key){
 }
 
 movement_keydown = function(event){
+
     if(event.key == "ArrowLeft"){
         moveleft_keydown = true;
     }
@@ -36,6 +37,10 @@ movement_keydown = function(event){
     }
     if(event.key == "ArrowDown"){
         movedown_keydown = true;
+    }
+    if(event.key == "0"){
+        let shooter = new Shooter();
+        shooter.shoot();
     }
     updateMovement();
 }
@@ -87,7 +92,7 @@ updateMovement = function(){
 
 class MainController{
     constructor(){
-
+        this.utils = new Utils();
     }
 
     moveLeft(){
@@ -119,6 +124,12 @@ class MainController{
             mySpaceship.position.y +=3*(mySpaceship.rotation.z*180/Math.PI)/50;
             camera.position.y +=3*(mySpaceship.rotation.z*180/Math.PI)/50;
         }
+        if(mySpaceship.position.y > 700){
+            this.utils.showMessage("Alarm Beeps: High atmospheric pressure go Down!",'#aa0000')
+            if(mySpaceship.position.y > 1200){
+                window.location.href ="http://www.saurabhdaware.cf";
+            }
+        }
     }
 
     moveDown(){
@@ -130,4 +141,8 @@ class MainController{
             camera.position.y -=-3*(mySpaceship.rotation.z*180/Math.PI)/50;
         }
     }
+
+    // shootForward(){
+    //     if(shoot)
+    // }
 }

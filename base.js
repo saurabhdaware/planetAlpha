@@ -21,12 +21,14 @@ camera.rotation.y = -90*Math.PI/180;
 
 let environment = new Environment(1);
 let models = new Models();
+let shooter = new Shooter();
 let mainController = new MainController();
 models.loadShuttle(1);
 
 var loadingManager = new THREE.LoadingManager( function() {
     scene.add( mySpaceship );
 } );
+
 var loader	= new THREE.ColladaLoader(loadingManager);
 var gltfLoad = new THREE.GLTFLoader(loadingManager);
 models.loadMyShuttle(loader,1);
