@@ -87,7 +87,8 @@ updateMovement = function(){
         }
     }
 
-       
+
+
 }
 
 class MainController{
@@ -139,6 +140,20 @@ class MainController{
             }
             mySpaceship.position.y -=-3*(mySpaceship.rotation.z*180/Math.PI)/50;
             camera.position.y -=-3*(mySpaceship.rotation.z*180/Math.PI)/50;
+        }
+    }
+
+    boostersControl(models){
+        if(movedown_keydown && ((moveright_keydown && moveleft_keydown) || (moveright_keydown || moveleft_keydown))){
+            models.shootL.visible = false;
+            models.shootR.visible = false;
+            models.detonationL.visible = false;
+            models.detonationR.visible = false;
+        }else{
+            models.shootL.visible = true;
+            models.shootR.visible = true;
+            models.detonationL.visible = true;
+            models.detonationR.visible = true;
         }
     }
 

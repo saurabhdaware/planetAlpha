@@ -7,6 +7,7 @@ let moveup_keydown = false;
 let movedown_keydown = false;
 let touchend = false;
 let indx = 0;
+let body = document.getElementById('bodyy');
 
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -33,6 +34,17 @@ var loader	= new THREE.ColladaLoader(loadingManager);
 var gltfLoad = new THREE.GLTFLoader(loadingManager);
 models.loadMyShuttle(loader,1);
 
+
+body.addEventListener('keydown',function(event){
+    movement_keydown(event);
+    mainController.boostersControl(models);
+});
+
+body.addEventListener('keyup',function(event){
+    movement_keyup(event)
+    mainController.boostersControl(models);
+});
+
 var animate = function () {
     if(mySpaceship !== undefined){
         mySpaceship.position.x +=3;
@@ -45,17 +57,6 @@ var animate = function () {
             }
         }
 
-        if(movedown_keydown && ((moveright_keydown && moveleft_keydown) || (moveright_keydown || moveleft_keydown))){
-            models.shootL.visible = false;
-            models.shootR.visible = false;
-            models.detonationL.visible = false;
-            models.detonationR.visible = false;
-        }else{
-            models.shootL.visible = true;
-            models.shootR.visible = true;
-            models.detonationL.visible = true;
-            models.detonationR.visible = true;
-        }
 
         mainController.moveUp();
         mainController.moveDown();

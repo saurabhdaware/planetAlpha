@@ -184,34 +184,27 @@ class Models{
         // console.log(this.shootL);
 
     }
-
+   
 
 
 }
 
-
 class Shooter{
     constructor(){
         this.shootMesh = new THREEx.SpaceShips.Shoot(0xff9955);
-        // for(let i=0;i<=3;i++){
-        //     this.shootMesh.children[i].material.opacity = 1;
-        // }
     }
 
-    shoot(){
-        this.shootMesh.position.x = mySpaceship.position.x+0.1;
+    createShoot(){
+        this.shootMesh.position.x = mySpaceship.position.x + 0.1;
         this.shootMesh.position.y = mySpaceship.position.y;
         this.shootMesh.position.z = mySpaceship.position.z;
 
-        this.shootMesh.scale.set(0.1,0.1,0.1);
-        this.shootMesh.rotation.y = Math.PI;
-        scene.add(this.shootMesh);
-
-        let shootGo = setInterval(()=>{
-            this.shootMesh.position.x = this.shootMesh.position.x + 6.5;
-            if(this.shootMesh.position.x > mySpaceship.position.x + 7000){
-                clearInterval(shootGo);
+        shootAnimation();
+        let shootAnimation = function(){
+            this.shootMesh.position.x+=3;
+            if(this.shootMesh.position.x < 7000){
+                requestAnimationFrame(shootAnimation);
             }
-        },10);
+        }
     }
 }

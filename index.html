@@ -12,7 +12,7 @@
 	<!-- <link rel="manifest" href="manifest.json"> -->
 	<link rel="stylesheet" href="style.css">
 </head>
-<body onkeydown="movement_keydown(event)" onkeyup="movement_keyup(event)" id="bodyy"> 
+<body id="bodyy"> 
 	<p style="position:absolute;z-index:100;margin-left:20px;font-weight:bold;font-size:19pt" id="msg"></p>
 	<button class="controls controls-moveright noSelect" ontouchstart="fakeKeydown('ArrowRight');" ontouchend="clearInterval(touchinterval);moveright_keydown = false;">&gt;&gt;</button>
 	<button class="controls controls-moveleft noSelect" ontouchstart="fakeKeydown('ArrowLeft');" ontouchend="clearInterval(touchinterval);moveleft_keydown = false;">&lt;&lt;</button>
